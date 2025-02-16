@@ -4,7 +4,6 @@ import SwiftSoup
 
 let TIMEPASSBD_URL = "http://ftp.timepassbd.live"
 
-// Logic for timepassbd and ftpbd
 func list(_ baseURL: String, _ path: String) {
     let fm = FileManager.default
     let cwd = FileManager.default.currentDirectoryPath
@@ -89,7 +88,7 @@ func isFile(_ baseURL: String, _ path: String, _ item: String) -> Bool {
 
 func download(_ baseURL: String, _ Url: String) {
     if ariaIsAvailable() {
-        oshell("aria2c", "-x", "1", "--auto-file-renaming=false", "--console-log-level=error", "\(baseURL)\(Url)")
+        oshell("aria2c", "-x", "1", "--auto-file-renaming=false", "--console-log-level=error", "--summary-interval=0", "\(baseURL)\(Url)")
     }
     else {
         print("please install aria2")
@@ -154,16 +153,6 @@ func getName(_ path: String) -> String {
     let pathComponents = path.split(separator: "/")
     let pathSize = pathComponents.count
     return String(pathComponents[pathSize - 1]).decodeUrl()
-}
-
-func saveToFile(data: Data) {
-    let fm = FileManager.default
-    if fm.createFile(atPath: "\(fm.currentDirectoryPath)/t.txt", contents: data) {
-        print("File ready")
-    }
-    else {
-        print("File failed !")
-    }
 }
 
 extension String {
